@@ -1,12 +1,13 @@
+import 'package:chaty/auth/auth_service.dart';
 import 'package:chaty/components/my_button.dart';
 import 'package:chaty/components/my_textfeild.dart';
 import 'package:flutter/material.dart';
 
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final void Function()? onTap;
+  const LoginPage({super.key, required this.onTap});
 
-  
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -14,7 +15,21 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwController = TextEditingController();
-  void login() {}
+  void login(BuildContext context) async {
+    final authService = AuthService();
+
+    try {
+      await  authService.signInWithEmailAndPassword(
+      _emailController.text,
+       _pwController.text,
+      );
+    } catch (e) {
+      showDialog(context: context, builder: (context)=> AlertDialog(
+        title: Text(e.toString()),
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,25 +69,28 @@ class _LoginPageState extends State<LoginPage> {
 
             MyButton(
               text: "Login",
-              onTap: login,
+              onTap: () => login(context),
             ),
 
             const SizedBox(height: 25),
 
-            Row(
+             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("not a member?",
+                Text(
+                  "not a member?",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
-                
-                Text(
-                  "Register now",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
+                GestureDetector(
+                  onTap: widget.onTap, // <-- Correction ici
+                  child: Text(
+                    " Register now",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
