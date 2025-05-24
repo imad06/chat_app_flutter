@@ -1,4 +1,4 @@
-import 'package:chaty/auth/auth_gate.dart';
+import 'package:chaty/services/auth/auth_gate.dart';
 import 'package:chaty/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

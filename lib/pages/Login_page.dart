@@ -1,4 +1,4 @@
-import 'package:chaty/auth/auth_service.dart';
+import 'package:chaty/services/auth/auth_service.dart';
 import 'package:chaty/components/my_button.dart';
 import 'package:chaty/components/my_textfeild.dart';
 import 'package:flutter/material.dart';
