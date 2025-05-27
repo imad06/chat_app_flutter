@@ -12,6 +12,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwController = TextEditingController();
   final TextEditingController _pwConfirmController = TextEditingController();
@@ -21,6 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
     if (_pwController.text == _pwConfirmController.text) {
      try{
       _auth.signUpWithEmailAndPassword(
+      _nameController.text,
       _emailController.text,
       _pwController.text,
     );
@@ -48,7 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -68,6 +70,14 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             const SizedBox(height: 50),
             // email textfield
+
+            MyTextfeild(
+              hintText: "Name",
+              obscureText: false,
+              controller: _nameController,
+
+            ),
+            const SizedBox(height: 10),
             MyTextfeild(
               hintText: "Email",
               obscureText: false,

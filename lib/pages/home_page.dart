@@ -15,8 +15,10 @@ class HomePage extends StatelessWidget {
 Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
-       
+        title: Text('Home'),
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.grey,
+        elevation: 0,
       
       ),
       drawer: const MyDrawer(),
@@ -44,14 +46,24 @@ Widget build(BuildContext context) {
           
        );
   }
-  Widget _buildUserListItem(Map<String, dynamic> userData, BuildContext context){
+Widget _buildUserListItem(
+  Map<String, dynamic> userData, BuildContext context){
+  if (userData["email"] != _authService.getCurrentUser()!.email) {
     return UserTitle(
-      text: userData['email'],
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> ChatPage(
-          reciveEmail: userData['email'],
-        )));
-      },
-    );
+text: (userData['email'] ?? 'No Name').toString(),    onTap: (){
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChatPage(
+            reciveEmail: userData['email'], 
+            receiverId: userData['uid'],// Passe l'email au chat
+          ),
+        ),
+      );
+    },
+  );
+  }else{
+    return Container(); // Ne pas afficher l'utilisateur actuel
   }
+}
 }
